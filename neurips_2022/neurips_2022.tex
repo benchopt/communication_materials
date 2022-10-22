@@ -56,27 +56,23 @@ Logos Inria, CNRS, Berkeley, Univ Luxembourg, Imag, Lund, Télécom, Criteo, Ulm
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}{Benchmarking algorithms is a pain}
 
-Numerical validation is at the heart of Machine Learning.
+Machine Learning relies on numerical validation
 
-% Best methods are chosen
 \vskip2em
 
-Doing a benchmark is a hassle:
-
-
-% \begin{minipage}{.8\textwidth}
+Doing a benchmark:
 \begin{itemize}
-	\item Takes time to reimplement methods
-	\item Takes time for reviewers to check reimplementations
-	\item Takes time to recode the tools needed
-	\item All of this $\times$ yearly number of ML submissions
+	\item takes time to reimplement methods
+	\item takes time for reviewers to check reimplementations
+	\item takes time to recode the tools needed
+	\item all of this started from scratch by every submission
 \end{itemize}
 % \end{minipage}
 
 \vskip2em
 
 
-With \Benchopt{} we this effort \textbf{open}, \textbf{collaborative} and \textbf{easy}.
+\Benchopt{} produces \textbf{reproducible}, \textbf{open}, \textbf{extendable} benchmarks
 
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -84,28 +80,34 @@ With \Benchopt{} we this effort \textbf{open}, \textbf{collaborative} and \textb
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}{\texttt{benchopt}}
+\begin{frame}{\Benchopt{}}
 
-open source organizations
+\Benchopt{} is an open source Python library to organize and run benchmarks
+\begin{itemize}
+    \item one base framework
+    \item one repository per benchmark
+\end{itemize}
 
-a base tool, \Benchopt{}, and one repository per optimization problem
-
-
-\begin{minipage}{0.45\linewidth}
-    {\footnotesize
-    \begin{itemize}
-        \item resnet
-        \item truc
-        \item foo bar
-    \end{itemize}
-    }
-\end{minipage}
+\vskip1em
+Already existing:
+\vskip.5em
 \begin{minipage}{0.45\linewidth}
     {\small
     \begin{itemize}
-        \item resnet
-        \item truc
-        \item foo bar
+        \item Resnet18
+        \item Lasso
+        \item ICA
+        \item Logistic regression
+    \end{itemize}
+    }
+\end{minipage}
+\begin{minipage}{0.48\linewidth}
+    {\small
+    \begin{itemize}
+        \item Total Variation
+        \item Ordinary Least Squares
+        \item Non convex sparse regression
+        \item linear SVM
     \end{itemize}
     }
 \end{minipage}
@@ -115,14 +117,16 @@ a base tool, \Benchopt{}, and one repository per optimization problem
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}{\texttt{benchopt}}
+\begin{frame}{Components of a benchmark}
+    \centering
+    \textbf{3 components}: Objective, Solver, Dataset
 
-    3 components: Objective, solvers, datasets
-
+    \vskip3em
     \includegraphics[width=\linewidth]{../sharedimages/benchopt_schema.pdf}
 
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -140,32 +144,38 @@ a base tool, \Benchopt{}, and one repository per optimization problem
         .3 solver2.py.
     }
     \end{minipage}
+    \begin{minipage}{0.45\linewidth}
+
+    \textbf{Modular \& extendable}
+    \vspace*{1mm}
 
     Adding a solver? add a file
 
     Adding a dataset? add a file
+    \end{minipage}
 
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}{Running benchmarks + results}
-
-    CSV, plotly for interactive exploration
-
-    maybe merge with below
+\begin{frame}{Interactive results exploration}
+    \centering
+    \includegraphics[width=0.8\linewidth]{../sharedimages/benchopt_convnet.png}
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}{\texttt{benchopt}}
+\begin{frame}{\Benchopt{} makes your life easy}
 
-    Metrics to follow, multiple parameters for a solver, easy way to filter out solvers
-
-    HTML results are easy to share between collaborators, can be uploaded
-
-    Parallel runs, results caching, csv
+    \begin{itemize}
+        \item monitor any metric you want (test/train loss, ...)
+        \item add parameters to solvers
+        \item share and publish HTML results
+        \item run all benchmarks in parallel
+        \item cache results
+        \item etc
+    \end{itemize}
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
