@@ -81,7 +81,7 @@ Doing a benchmark:
 \vskip2em
 
 
-\Benchopt{} produces \textbf{reproducible}, \textbf{open}, \textbf{extendable} benchmarks
+\Benchopt{} produces \textbf{open}, \textbf{reproducible}, \textbf{extendable} benchmarks
 
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -89,16 +89,16 @@ Doing a benchmark:
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}{\Benchopt{}}
+\begin{frame}{What is \Benchopt{}?}
 
-\Benchopt{} is an open source Python library to organize and run benchmarks
+\Benchopt{} is a framework to organize and run benchmarks
 \begin{itemize}
-    \item one base framework
+    \item one base open source Python library
     \item one repository per benchmark
 \end{itemize}
 
 \vskip1em
-Already existing:
+Examples of existing benchmarks:
 \vskip.5em
 \begin{minipage}{0.45\linewidth}
     {\small
@@ -127,7 +127,9 @@ Already existing:
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}{Components of a benchmark}
+
     \centering
+    \vspace*{-5mm}
     \textbf{3 components}: Objective, Solver, Dataset
 
     \vskip3em
@@ -180,12 +182,14 @@ Already existing:
 \begin{frame}{\Benchopt{} makes your life easy}
 
     \begin{itemize}
+        \item use solvers in Python, R, Julia, binaries...
+        \item build on previous benchmarks
         \item monitor any metric you want (test/train loss, ...)
         \item add parameters to solvers
         \item share and publish HTML results
         \item run all benchmarks in parallel
         \item cache results
-        \item etc
+        \item and much more!
     \end{itemize}
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
