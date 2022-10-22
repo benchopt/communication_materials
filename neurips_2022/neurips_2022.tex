@@ -65,17 +65,18 @@ Reproducible, efficient and collaborative optimization benchmarks}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}{Benchmarking algorithms is a pain}
 
-Machine Learning relies on numerical validation
+Machine Learning research relies on numerical validation.
 
 \vskip2em
 
-Doing a benchmark:
+Pain points of a benchmark:\\[.2em]
 \begin{itemize}
-	\item takes time to reimplement methods
-	\item takes time for reviewers to check reimplementations
-	\item takes time to recode the tools needed
-	\item all of this started from scratch by every submission
+	\item competitors' Methods do not work out of the box.
+	\item re-code methods and tools to integrate a new method.
+	\item hard to extend with new settings.
 \end{itemize}
+\vskip1em
+{\centering \large all of this started from scratch by every submission!\\}
 % \end{minipage}
 
 \vskip2em
@@ -91,10 +92,10 @@ Doing a benchmark:
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}{What is \Benchopt{}?}
 
-\Benchopt{} is a framework to organize and run benchmarks
+\Benchopt{} is a framework to organize and run benchmarks:
 \begin{itemize}
-    \item one base open source Python library
     \item one repository per benchmark
+    \item one base open source \texttt{Python} CLI to run them.
 \end{itemize}
 
 \vskip1em
@@ -182,9 +183,9 @@ Examples of existing benchmarks:
 \begin{frame}{\Benchopt{} makes your life easy}
 
     \begin{itemize}
-        \item use solvers in Python, R, Julia, binaries...
         \item build on previous benchmarks
-        \item monitor any metric you want (test/train loss, ...)
+        \item use solvers in Python, R, Julia, binaries...
+        \item monitor any metric you want altogether (test/train loss, ...)
         \item add parameters to solvers
         \item share and publish HTML results
         \item run all benchmarks in parallel
@@ -207,9 +208,10 @@ Examples of existing benchmarks:
     \end{itemize}
     }
 
+    \vskip2em
     \centering
     \includegraphics[width=\linewidth]{../sharedimages/resnet18_sgd_torch_legend.pdf}
-    \includegraphics[width=\linewidth]{../sharedimages/resnet18_sgd_torch_val.pdf}
+    \includegraphics[width=\linewidth]{../sharedimages/resnet18_sgd_torch.pdf}
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
