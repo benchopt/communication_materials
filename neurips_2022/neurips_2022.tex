@@ -47,7 +47,16 @@ Reproducible, efficient and collaborative optimization benchmarks}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}{Contributors from...}
-Logos Inria, CNRS, Berkeley, Univ Luxembourg, Imag, Lund, Télécom, Criteo, Ulm, Imag ?
+    \centering
+    \includegraphics[height=35px]{../sharedimages/logo_berkeley.png} \hspace{1mm}
+    \includegraphics[height=45px]{../sharedimages/um_logo.pdf} \hspace{1mm}
+    \includegraphics[width=100px]{../sharedimages/logo_inria.png} \hspace{1mm} \\[7mm]
+    \includegraphics[height=50px]{../sharedimages/logo_cnrs.pdf} \hspace{5mm}
+    \includegraphics[height=50px]{../sharedimages/logo_lund} \hspace{5mm}
+    \includegraphics[height=50px]{../sharedimages/logo_telecom.pdf} \hspace{5mm}
+    \includegraphics[height=50px]{../sharedimages/logo_univ_luxembourg.pdf}
+    % \includegraphics[height=40px]{../sharedimages/}
+    % \includegraphics[height=40px]{../sharedimages/}
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -147,11 +156,13 @@ Already existing:
     \begin{minipage}{0.45\linewidth}
 
     \textbf{Modular \& extendable}
-    \vspace*{1mm}
+    \vspace*{5mm}
 
-    Adding a solver? add a file
+    New solver? add a file
 
-    Adding a dataset? add a file
+    New dataset? add a file
+
+    New metric? modify objective
     \end{minipage}
 
 \end{frame}
@@ -181,8 +192,20 @@ Already existing:
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}{Resnet benchmark}
-    In the paper we present 10 benchmarks and in particular 3, resnets
+\begin{frame}{Example: Resnet benchmark}
+
+    { \small
+    \begin{itemize}
+        \item image classification with resnet18
+        \item various optimization strategies
+        \item compare \texttt{pytorch} and \texttt{tensorflow}
+        \item publish reproducible SOTA for baselines
+    \end{itemize}
+    }
+
+    \centering
+    \includegraphics[width=\linewidth]{../sharedimages/resnet18_sgd_torch_legend.pdf}
+    \includegraphics[width=\linewidth]{../sharedimages/resnet18_sgd_torch_val.pdf}
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
