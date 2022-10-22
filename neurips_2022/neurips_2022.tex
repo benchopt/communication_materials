@@ -3,7 +3,7 @@
 \usepackage{../sty/beamer_js}
 \usepackage{../sty/shortcuts_js}
 
-
+\usepackage{dirtree}
 \newcommand{\Benchopt}{\texttt{Benchopt}}
 
 \definecolor{tomcolor}{rgb}{0.,.3,.6}
@@ -40,7 +40,7 @@ Reproducible, efficient and collaborative optimization benchmarks}
 \end{center}
 
 \centering
-\includegraphics[width=0.43\textwidth]{../logo/benchopt_logo.pdf}
+\includegraphics[width=0.43\textwidth]{../sharedimages/benchopt_logo.pdf}
 
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -58,7 +58,8 @@ Logos Inria, CNRS, Berkeley, Univ Luxembourg, Imag, Lund, Télécom, Criteo, Ulm
 
 Numerical validation is at the heart of Machine Learning.
 
-Best methods are chosen
+% Best methods are chosen
+\vskip2em
 
 Doing a benchmark is a hassle:
 
@@ -75,7 +76,7 @@ Doing a benchmark is a hassle:
 \vskip2em
 
 
-\Benchopt{} makes this effort \textbf{open}, \textbf{collaborative} and \textbf{easy}.
+With \Benchopt{} we this effort \textbf{open}, \textbf{collaborative} and \textbf{easy}.
 
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -83,19 +84,31 @@ Doing a benchmark is a hassle:
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}[fragile]{\texttt{benchopt}}
+\begin{frame}{\texttt{benchopt}}
 
-Doing a  benchmark for the $\ell_2$ regularized logistic regression with multiple solvers and datasets is now easy as calling:\\[1em]
+open source organizations
 
-\begin{lstlisting}[language=bash]
-git clone https://github.com/benchopt/benchmark_logreg_l2
-benchopt run ./benchmark_logreg_l2
-\end{lstlisting}
+a base tool, \Benchopt{}, and one repository per optimization problem
 
-\vskip1.5em
-\includegraphics[width=.45\textwidth]{logreg_l2}
-\hskip3ex
-\includegraphics[width=.45\textwidth]{logreg_l2_1}
+
+\begin{minipage}{0.45\linewidth}
+    {\footnotesize
+    \begin{itemize}
+        \item resnet
+        \item truc
+        \item foo bar
+    \end{itemize}
+    }
+\end{minipage}
+\begin{minipage}{0.45\linewidth}
+    {\small
+    \begin{itemize}
+        \item resnet
+        \item truc
+        \item foo bar
+    \end{itemize}
+    }
+\end{minipage}
 
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -104,81 +117,84 @@ benchopt run ./benchmark_logreg_l2
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}{\texttt{benchopt}}
 
-\texttt{benchopt} can also compare the same algo in different languages.\\[1em]
+    3 components: Objective, solvers, datasets
 
-Here is an example comparing PGD in: Python; R; Julia.\\[1em]
-{\centering
-\vskip.5em
-\includegraphics[width=.65\textwidth]{lasso_3_languages}\\}
+    \includegraphics[width=\linewidth]{../sharedimages/benchopt_schema.pdf}
 
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}{Benchmark: principle}
+\begin{frame}{Structure of a benchmark}
 
-A benchmark is a directory with:\\
-\begin{itemize}
-    \item An \lstinline+objective.py+ file with an \lstinline+Objective+
-    \item A directory \lstinline+solvers+ with one file per \lstinline+Solver+
-    \item A directory \lstinline+datasets+ with \lstinline+Dataset+ generators/fetchers
-\end{itemize}
-\vskip1em
+    \begin{minipage}{0.45\linewidth}
+        \dirtree{%
+        .1 benchmark/.
+        .2 objective.py.
+        .2 datasets/.
+        .3 dataset1.py.
+        .3 dataset2.py.
+        .2 solvers/.
+        .3 solver1.py.
+        .3 solver2.py.
+    }
+    \end{minipage}
 
-\rem each objects above can be parametrized
+    Adding a solver? add a file
 
-\vskip1em
-
-The \lstinline+benchopt+ client runs a cross product and generates a csv file + convergence plots like above.\\[.5em]
-We expose easy way to select the \lstinline+objective/solver/dataset+ you want to run.
-\end{frame}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}{Status}
-
-Currently, benchmarks implementation available for:\\[.5em]
-\begin{itemize}
-	\item Least Square
-	\item Non-Negative Least Square
-	\item Lasso
-	\item L1/L2 Regularized Logistic Regression
-\end{itemize}
-
-% \vskip1em
-% Help appreciated: feel free to \underline{join} our effort to create reproducible benchmarks by adding new objectives/solvers/datasets!!!\\[1em]
+    Adding a dataset? add a file
 
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-{
-\usebackgroundtemplate{\includegraphics[width=\paperwidth]{wanted}}
-\begin{frame}[plain]
+\begin{frame}{Running benchmarks + results}
+
+    CSV, plotly for interactive exploration
+
+    maybe merge with below
 \end{frame}
-}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}{\texttt{benchopt}}
-    \centering
-    \includegraphics[width=.9\textwidth]{benchopt}\\
+
+    Metrics to follow, multiple parameters for a solver, easy way to filter out solvers
+
+    HTML results are easy to share between collaborators, can be uploaded
+
+    Parallel runs, results caching, csv
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}{Contact}
-
-\vspace{0.4cm}
-\centering
-\includegraphics[width=0.93\textwidth]{contact_js}
+\begin{frame}{Resnet benchmark}
+    In the paper we present 10 benchmarks and in particular 3, resnets
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \begin{frame}{\texttt{benchopt}}
+%     \centering
+%     \includegraphics[width=.9\textwidth]{benchopt}\\
+% \end{frame}
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \begin{frame}{Contact}
+
+% \vspace{0.4cm}
+% \centering
+% \includegraphics[width=0.93\textwidth]{contact_js}
+% \end{frame}
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
 
