@@ -47,7 +47,7 @@
 
 
 
-\graphicspath{{images/}}
+\graphicspath{{../images/}}
 
 \usepackage{empheq}
 \usepackage{dsfont}
@@ -153,7 +153,7 @@
   {
   % Show grid to help with alignment
   grid=false,
-  columns=6,
+  columns=,
   % Column spacing
   colspacing=0.35em,
   % Color style
@@ -247,7 +247,7 @@
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\headerbox{Benchopt API}{name=api,column=0,row=0, span=6}{
+\headerbox{Benchopt API}{name=api,column=0,row=0, span=4}{
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -283,10 +283,77 @@
 
 }
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Central eye-catching box
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{posterbox}[name=center,column=0,below=api,span=4,
+  boxheaderheight=0em,
+  boxColorOne=\maincolor,
+  ]{}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+%
+%%%%%%%%%%%%%%%%%%%%%%%
+% Left box - goodies
+%%%%%%%%%%%%%%%%%%%%%%%
+\fcolorbox{black}{white}{
+\begin{minipage}[c][16em]{.239\linewidth}
+\raggedright
+{\bf Research paper benchmarks:}
+\begin{itemize}
+\item Not transparent
+\item Hard to reproduce
+\item Time consuming
+\item Frozen in time
+\end{itemize}
+\vskip1em\centering
+{\bf Benchopt solves this!}\\
+% {\bf Easy benchmark run:}
+% \begin{itemize}
+%   \item Modular and collaborative
+%   \item Automatic caching
+%   \item Parallelization with \texttt{joblib} and {SLURM}
+%   \item Cross languages: R, Julia
+% \end{itemize}
+\end{minipage}
+}
+\hskip2ex
+%
+%%%%%%%%%%%%%%%%%%%%%%%
+% Center Logo and QR code
+%%%%%%%%%%%%%%%%%%%%%%%
+\begin{minipage}{.39\linewidth}
+\centering
+\includegraphics[width=0.5\linewidth]{logo_benchopt}\\
+{\color{white}\bf\Large Reproducible, Extendable and Shareable Benchmarks\\[.5em]}
+\hfill
+\includegraphics[width=0.2\linewidth]{qr-doc}\hfill
+\includegraphics[width=0.2\linewidth]{qr-pdf}\hfill\phantom{.}\\
+\raisebox{-.5em}{\includegraphics[height=2em]{logo_github}} {\bf\color{white}~~https://github.com/benchopt/benchopt}
+\end{minipage}
+\hskip2ex
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Right box - publish information
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\fcolorbox{black}{white}{
+\begin{minipage}[c][16em]{.239\linewidth}
+\raggedright
+{\bf Publishable results:}\\[.5em]
+\centering
+% \includegraphics[width=0.45\linewidth]{benchopt_results}
+\raisebox{-2ex}{\includegraphics[width=0.95\linewidth]{benchopt_convnet}}
+\end{minipage}
+}
+\end{posterbox}
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Example of Solver
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{posterbox}[name=use-case-solver,column=4,span=2, below=api,
+\begin{posterbox}[name=use-case-solver,column=4,span=2, below=center,
                   boxColorOne=black!15,]{Adding a Solver}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -314,7 +381,7 @@ class Solver(BaseSolver):
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Example of Dataset
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{posterbox}[name=use-case-data,column=0,span=2, below=api,
+\begin{posterbox}[name=use-case-data,column=4,span=2, %below=center,
   boxColorOne=black!15,]{Adding a Dataset}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -343,7 +410,7 @@ class Dataset(BaseDataset):
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Example of Objective
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{posterbox}[name=use-case-obj,column=2,span=2, below=api,
+\begin{posterbox}[name=use-case-obj,column=4,span=2, below=use-case-data,
   boxColorOne=black!15]{Adding an Objective}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -370,77 +437,12 @@ class Objective(BaseObjective):
 \end{posterbox}
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Central eye-catching box
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{posterbox}[name=center,column=0,below=use-case-solver,span=6,
-                  boxheaderheight=0em,
-                  boxColorOne=\maincolor,
-                  ]{}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
-
-%
-%%%%%%%%%%%%%%%%%%%%%%%
-% Left box - goodies
-%%%%%%%%%%%%%%%%%%%%%%%
-\fcolorbox{black}{white}{
-\begin{minipage}[c][16em]{.239\linewidth}
-    \raggedright
-    {\bf Research paper benchmarks:}
-    \begin{itemize}
-      \item Not transparent
-      \item Hard to reproduce
-      \item Time consuming
-      \item Frozen in time
-    \end{itemize}
-    \vskip1em\centering
-    {\bf Benchopt solves this!}\\
-    % {\bf Easy benchmark run:}
-    % \begin{itemize}
-    %   \item Modular and collaborative
-    %   \item Automatic caching
-    %   \item Parallelization with \texttt{joblib} and {SLURM}
-    %   \item Cross languages: R, Julia
-    % \end{itemize}
-  \end{minipage}
-}
-\hskip2ex
-%
-%%%%%%%%%%%%%%%%%%%%%%%
-% Center Logo and QR code
-%%%%%%%%%%%%%%%%%%%%%%%
-\begin{minipage}{.39\linewidth}
-  \centering
-  \includegraphics[width=0.5\linewidth]{logo_benchopt}\\
-  {\color{white}\bf\Large Reproducible, Extendable and Shareable Benchmarks\\[.5em]}
-  \hfill
-  \includegraphics[width=0.2\linewidth]{qr-doc}\hfill
-  \includegraphics[width=0.2\linewidth]{qr-pdf}\hfill\phantom{.}\\
-  \raisebox{-.5em}{\includegraphics[height=2em]{logo_github}} {\bf\color{white}~~https://github.com/benchopt/benchopt}
-\end{minipage}
-\hskip2ex
-%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Right box - publish information
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\fcolorbox{black}{white}{
-  \begin{minipage}[c][16em]{.239\linewidth}
-    \raggedright
-    {\bf Publishable results:}\\[.5em]
-    \centering
-    % \includegraphics[width=0.45\linewidth]{benchopt_results}
-    \raisebox{-2ex}{\includegraphics[width=0.95\linewidth]{benchopt_convnet}}
-  \end{minipage}
-}
-\end{posterbox}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Benchmark resnet
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\headerbox{ResNet for Image Classification}{name=resnet,column=0,below=center,span=6}{
+\headerbox{ResNet for Image Classification}{name=resnet,column=0,below=center,span=4}{
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % \hskip-4ex
 \begin{minipage}{.42\textwidth}
