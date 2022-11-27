@@ -15,3 +15,4 @@ build
 *.bbl
 *.blg
 *.fdb_latexmk
+/posters/landscape/neurips_benchopt.pdf
