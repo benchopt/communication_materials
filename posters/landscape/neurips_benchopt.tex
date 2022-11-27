@@ -153,7 +153,7 @@
   {
   % Show grid to help with alignment
   grid=false,
-  columns=,
+  columns=6,
   % Column spacing
   colspacing=0.35em,
   % Color style
@@ -350,33 +350,7 @@
 \end{posterbox}
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Example of Solver
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{posterbox}[name=use-case-solver,column=4,span=2, below=center,
-                  boxColorOne=black!15,]{Adding a Solver}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-  \begin{python}
-class Solver(BaseSolver):
-    name = "GD"
-    parameters = {"lr": [.1, .01]}
-
-    def set_objective(self, X, y):
-        self.X, self.y = X, y
-
-    def run(self, n_iter):
-        w = np.zeros(X.shape[1])
-        for _ in range(n_iter):
-            grad = X.T @ (X @ w - y)
-            w -= self.lr * grad
-        self.w_ = w
-
-    def get_result(self):
-        return self.w_
-    \end{python}
-    \vskip-1.8em\phantom{.}
-\end{posterbox}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Example of Dataset
@@ -389,17 +363,12 @@ class Solver(BaseSolver):
 class Dataset(BaseDataset):
     name = "Simulated"
 
-    parameters = {
-      "n": [10, 100],
-      "p": [10, 100],
-    }
+    parameters = {"n": [10, 100], "p": [10, 100]}
 
     def get_data(self):
         rng = np.random.RandomState(27)
-
         X = rng.randn(self.n, self.p)
         y = X @ rng.randn(self.p)
-
         return dict(X=self.X, y=self.y)
 
     \end{python}
@@ -426,23 +395,48 @@ class Objective(BaseObjective):
 
     def compute(self, w):
         res = self.y - self.X @ w
-
-        return dict(
-          value=.5 * res @ res,
-          norm=w @ w
-        )
+        return dict(value=.5 * res @ res, norm=w @ w)
 
 \end{python}
 \vskip-1.8em\phantom{.}
 \end{posterbox}
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Example of Solver
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{posterbox}[name=use-case-solver,column=4,span=2, below=use-case-obj,
+  boxColorOne=black!15,]{Adding a Solver}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{python}
+class Solver(BaseSolver):
+    name = "GD"
+    parameters = {"lr": [.1, .01]}
+
+    def set_objective(self, X, y):
+        self.X, self.y = X, y
+
+    def run(self, n_iter):
+        w = np.zeros(X.shape[1])
+        for _ in range(n_iter):
+            grad = X.T @ (X @ w - y)
+            w -= self.lr * grad
+            self.w_ = w
+
+    def get_result(self):
+        return self.w_
+    \end{python}
+    \vskip-1.8em\phantom{.}
+\end{posterbox}
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Benchmark resnet
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\headerbox{ResNet for Image Classification}{name=resnet,column=0,below=center,span=4}{
+\headerbox{ResNet for Image Classification}{name=resnet,column=0,below=center,span=4,
+bottomaligned=use-case-solver}{
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % \hskip-4ex
 \begin{minipage}{.42\textwidth}
@@ -480,34 +474,34 @@ class Objective(BaseObjective):
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Benchmark logreg
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\headerbox{Some Other Benchmarks}{name=benchmarks,column=3,below=resnet,span=3}{
+\headerbox{Some Other Benchmarks}{name=benchmarks,column=4,below=use-case-solver,span=2}{
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\vskip.5em
-\begin{itemize}
+\vskip.1em
+\begin{itemize}[itemsep=-2pt]
   \item Regularized Logistic Regression
   \item Total Variation Inverse Problems
   \item Quantile Regression
-  \item Minimax Concave Penalty (MCP) Regression
+  \item Sparse Regression
   \item Non-Negative Least-squares
   \item Independent Component Analysis
 \end{itemize}
-% \vskip.5em
+\vspace{-7mm}
 {\bf\centering\Large Add yours with our template!!\hskip3ex
-\raisebox{-1em}{\includegraphics[height=3em]{qr-template}}
+\raisebox{-1em}{\includegraphics[height=2.6em]{qr-template}}
 \\}
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Benchmark Lasso
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\headerbox{Lasso}{name=lasso,column=0,below=resnet,span=3,bottomaligned=benchmarks}{
+\headerbox{Lasso}{name=lasso,column=0,below=resnet,span=4}{
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\[
-    \min_\beta\frac12\|y - X\beta\|_2^2 + \lambda\|\beta\|_1
-\]
+% \[
+%     \min_\beta\frac12\|y - X\beta\|_2^2 + \lambda\|\beta\|_1
+% \]
 \centering
-\includegraphics[width=\textwidth,trim={0 48em 0 0},clip]{meg_rcv1_news20_MSD.pdf}\\
+\includegraphics[width=0.9\textwidth,trim={0 48em 0 0},clip]{meg_rcv1_news20_MSD.pdf}\\
 \includegraphics[width=\textwidth,trim={0 0 0 62em},clip]{meg_rcv1_news20_MSD.pdf}\\[.5em]
 \includegraphics[width=.9\textwidth]{meg_rcv1_news20_MSD_legend}\\
 
