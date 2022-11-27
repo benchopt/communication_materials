@@ -494,16 +494,17 @@ bottomaligned=use-case-solver}{
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Benchmark Lasso
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\headerbox{Lasso}{name=lasso,column=0,below=resnet,span=4}{
+\headerbox{Lasso}{name=lasso,column=0,below=resnet,span=4,bottomaligned=benchmarks}{
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% \[
-%     \min_\beta\frac12\|y - X\beta\|_2^2 + \lambda\|\beta\|_1
-% \]
+\[
+    \min_\beta\frac12\|y - X\beta\|_2^2 + \lambda\|\beta\|_1
+\]
 \centering
-\includegraphics[width=0.9\textwidth,trim={0 48em 0 0},clip]{meg_rcv1_news20_MSD.pdf}\\
-\includegraphics[width=\textwidth,trim={0 0 0 62em},clip]{meg_rcv1_news20_MSD.pdf}\\[.5em]
-\includegraphics[width=.9\textwidth]{meg_rcv1_news20_MSD_legend}\\
+\includegraphics[width=0.7\textwidth,trim={0 48em 0 0},clip]{meg_rcv1_news20_MSD.pdf}
+% \includegraphics[width=\textwidth,trim={0 0 0 62em},clip]{meg_rcv1_news20_MSD.pdf}\\[.5em]
+\hspace{6mm}
+\includegraphics[width=.2\textwidth]{meg_rcv1_news20_MSD_legend_vert}\\
 
 
 }
