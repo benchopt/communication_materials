@@ -435,8 +435,7 @@ class Solver(BaseSolver):
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Benchmark resnet
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\headerbox{ResNet for Image Classification}{name=resnet,column=0,below=center,span=4,
-bottomaligned=use-case-solver}{
+\headerbox{ResNet for Image Classification}{name=resnet,column=0,below=center,span=4}{
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % \hskip-4ex
 \begin{minipage}{.42\textwidth}
@@ -447,8 +446,8 @@ bottomaligned=use-case-solver}{
     \item Compare \texttt{Pytorch} and \texttt{Tensorflow}
     \item Reproducible SOTA results for baselines
   \end{itemize}
-\end{minipage}\hskip2ex
-\begin{minipage}{.5\textwidth}
+\end{minipage}\hskip1ex
+\begin{minipage}{.55\textwidth}
   \includegraphics[width=\textwidth]{resnet18_sgd_torch}
   \includegraphics[width=\textwidth]{resnet18_sgd_torch_legend}
 \end{minipage}%
@@ -497,14 +496,14 @@ bottomaligned=use-case-solver}{
 \headerbox{Lasso}{name=lasso,column=0,below=resnet,span=4,bottomaligned=benchmarks}{
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\[
-    \min_\beta\frac12\|y - X\beta\|_2^2 + \lambda\|\beta\|_1
-\]
+% \[
+%     \min_\beta\frac12\|y - X\beta\|_2^2 + \lambda\|\beta\|_1
+% \]
 \centering
 \includegraphics[width=0.7\textwidth,trim={0 48em 0 0},clip]{meg_rcv1_news20_MSD.pdf}
 % \includegraphics[width=\textwidth,trim={0 0 0 62em},clip]{meg_rcv1_news20_MSD.pdf}\\[.5em]
-\hspace{6mm}
-\includegraphics[width=.2\textwidth]{meg_rcv1_news20_MSD_legend_vert}\\
+\hspace{6mm}\raisebox{1em}{
+\includegraphics[width=.2\textwidth]{meg_rcv1_news20_MSD_legend_vert}}\\
 
 
 }
