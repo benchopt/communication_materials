@@ -1,0 +1,338 @@
+\documentclass[unknownkeysallowed]{beamer}
+\usepackage[french,english]{babel}
+\usepackage{../sty/beamer_js}
+\usepackage{../sty/shortcuts_js}
+
+\usepackage{dirtree}
+\newcommand{\Benchopt}{\texttt{Benchopt}}
+
+\definecolor{tomcolor}{rgb}{0.,.3,.6}
+\lstset{basicstyle=\color{tomcolor}\scriptsize\ttfamily}
+\addbibresource{../biblio/biblio.bib}
+\captionsetup[subfigure]{labelformat=empty}
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%             Headers               %%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\bigskip
+\bigskip
+\begin{center}{
+\LARGE\color{marron}
+\textbf{\texttt{Benchopt}:\\
+Reproducible, efficient, and collaborative optimization benchmarks}
+\textbf{ }\\
+}
+
+\color{marron}
+\end{center}
+
+\vspace{0.5cm}
+
+\begin{center}
+\textbf{Benchopt contributors} \\
+\vspace{0.1cm}
+\url{https://benchopt.github.io}\\
+\end{center}
+
+\centering
+\includegraphics[width=0.43\textwidth]{../sharedimages/benchopt_logo.pdf}
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Contributors from...}
+    \centering
+    \includegraphics[width=100px]{../sharedimages/logo_inria_horiz.pdf} \hspace{1mm}
+    \includegraphics[height=45px]{../sharedimages/um_logo.pdf} \hspace{1mm}
+    \includegraphics[height=35px]{../sharedimages/logo_berkeley.png} \hspace{1mm}
+    \\[7mm]
+    \includegraphics[height=50px]{../sharedimages/logo_cnrs.pdf} \hspace{5mm}
+    \includegraphics[height=50px]{../sharedimages/logo_lund} \hspace{5mm}
+    \includegraphics[height=50px]{../sharedimages/logo_telecom.pdf} \hspace{5mm}
+    \includegraphics[height=50px]{../sharedimages/logo_univ_luxembourg.pdf} \\[4mm]
+    \includegraphics[height=40px]{../sharedimages/logo_ens.png}
+    % \includegraphics[height=40px]{../sharedimages/}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Reproducible Research}
+
+    Different goals:\\[.5em]
+    \begin{itemize}
+        \item Reproduce the exact same results.
+        \item Run with new parameters to evaluate robust results.
+        \item Run with a new dataset to test generalization.
+        \item Extend the results with new methods.
+    \end{itemize}
+
+    \pause
+    \vskip2em
+    \centering In CS, and in particular ML research, it is the starting point:\\
+    This gives us our baselines!\\
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Benchmarking algorithms is a pain}
+
+    Machine Learning research relies on numerical validation.
+
+    \vskip2em
+
+    But this can require significant work to do so reliably:\\[.2em]
+    \begin{itemize}
+        \item Unclear setup and parameters.
+        \item Competitors' methods do not work out of the box.
+        \item Re-code methods and tools to integrate a new method.
+        \item Hard to extend with new settings.
+    \end{itemize}
+
+    \pause
+    \vskip2em
+    \centering \large All of this started from scratch with every submission!\\
+    % \end{minipage}
+
+    \pause\vskip2em
+    This can lead to \textbf{unreliable} and \textbf{unfair} comparisons.
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}[fragile]{Typical case: deep learning optimization}
+
+    \begin{columns}[c]
+        \column{.5\textwidth}
+            \includegraphics[width=\textwidth, trim={0 18em 0 0}, clip]{DL_optimizers}
+        \column{.5\textwidth}
+            \vskip2em
+            \includegraphics[width=\textwidth]{tweet_steinner}
+            \includegraphics[width=\textwidth]{tweet_steinner2}
+    \end{columns}
+
+    \vskip1em
+    \strongpoint{Many novel methods but unclear improvements.}
+    \pause
+    \strongpoint{And this benchmark cannot be easily reproduced!}
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Example: Resnet benchmark}
+
+    { \small
+    \begin{itemize}
+        \item image classification with resnet18
+        \item various optimization strategies
+        \item compare \texttt{pytorch} and \texttt{tensorflow}
+        \item publish reproducible SOTA for baselines
+    \end{itemize}
+    }
+
+    \vskip1em
+    \centering
+    \includegraphics[width=\linewidth]{../sharedimages/resnet18_sgd_torch_legend.pdf}
+    \includegraphics[width=\linewidth]{../sharedimages/resnet18_sgd_torch.pdf}
+
+    \url{https://github.com/benchopt/benchmark_resnet_classif/}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Benchopt scope}
+
+    Machine Learning research relies on numerical validation.
+    \vskip2em
+    This can be improved through code and task sharing.\\
+    \begin{itemize}
+        \item More robust baselines,
+        \item Fair evaluation,
+        \item Faster research iteration. \keypoint{Frictionless Reproducibility}
+    \end{itemize}
+    \pause
+    \centering
+    \vskip2em
+    {\Large\Benchopt{} produces \textbf{open}, \textbf{reproducible}, \textbf{extendable} benchmarks.}
+
+    \vskip2em
+    {Plus aggregates tools to make it easy to run and share benchmarks.}
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{\Benchopt{} makes your life easy}
+
+    \begin{itemize}
+        \item build on previous benchmarks
+        \item use solvers in various languages: Python, R, Julia, binaries...
+        \item monitor any metric you want altogether (test/train loss, ...)
+        \item run all benchmarks in parallel or on distributed cluster
+        \item add parameters to solvers
+        \item share and publish HTML results
+        \item cache results
+        \item and much more!
+    \end{itemize}
+    \vskip1em
+    \centering
+    \includegraphics[width=0.8\linewidth]{../sharedimages/tweet_rahimi.png}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{How does \Benchopt{} do it?}
+
+\Benchopt{} provides a framework to organize and run benchmarks:
+\begin{itemize}
+    \item Each benchmark is a repository
+    \item \Benchopt{} is a \texttt{Python} CLI to run them
+\end{itemize}
+
+\vskip1em
+Examples of existing benchmarks:
+\vskip.5em
+\begin{minipage}{0.5\linewidth}
+    {\small
+    \begin{itemize}
+        \item \href{https://github.com/benchopt/benchmark_resnet_classif}{\bf Image Classification (resnet)}
+        \item \href{https://github.com/benchopt/benchmark_logreg_l2}{\bf Logistic regression}
+        \item \href{https://github.com/benchopt/benchmark_lasso}{\bf Lasso}
+        \item \href{https://github.com/benchopt/benchmark_linear_ica}{\bf ICA}
+    \end{itemize}
+    }
+\end{minipage}
+\begin{minipage}{0.48\linewidth}
+    {\small
+    \begin{itemize}
+        \item \href{https://github.com/benchopt/benchmark_tv_1d}{\bf Total Variation}
+        \item \href{https://github.com/benchopt/benchmark_bilevel}{\bf Bilevel Optimization}
+        \item \href{https://github.com/benchopt/benchmark_bci}{\bf Brain Computer Interface}
+        \item \href{https://github.com/benchopt/?q=benchmark_&type=all&language=&sort=name}{\bf \dots}
+    \end{itemize}
+    }
+\end{minipage}
+\vskip2em
+
+\centering
+Start yours with \url{https://github.com/benchopt/template_benchmark} or \url{https://github.com/benchopt/template_benchmark_ml}!
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Structure of a benchmark}
+
+    \begin{minipage}{0.45\linewidth}
+        \dirtree{%
+        .1 benchmark/.
+        .2 objective.py.
+        .2 datasets/.
+        .3 dataset1.py.
+        .3 dataset2.py.
+        .2 solvers/.
+        .3 solver1.py.
+        .3 solver2.py.
+    }
+    \end{minipage}
+    \begin{minipage}{0.45\linewidth}
+
+    \textbf{Modular \& extendable}
+    \vspace*{5mm}
+
+    New solver? add a file
+
+    New dataset? add a file
+
+    New metric? modify objective
+    \end{minipage}
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Tutorial}
+
+    \centering
+    \huge Running a benchmark!
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Components of a benchmark}
+
+    \centering
+    \vspace*{-5mm}
+    \textbf{3 components}: Objective, Dataset, Solver
+
+    \vskip3em
+    \includegraphics[width=\linewidth]{../sharedimages/benchopt_schema.pdf}
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Flow of a benchmark}
+
+    \centering
+    \vspace*{-5mm}
+    \textbf{3 components}: Objective, Dataset, Solver
+
+    \vskip3em
+    \includegraphics[width=\linewidth]{../sharedimages/benchopt_schema_dependency.pdf}
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Tutorial}
+
+    \centering
+    \huge Adding a solver to an existing benchmark!
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{\Benchopt{} Roadmap}
+    \begin{itemize}
+        \item \textbf{Improving the UI --} make \Benchopt{} frictionless\\[1em]
+        \item \textbf{Fit more usecases --} expand beyond optimization tools \\(in particular for ML workflows)\\[1em]
+        \item \textbf{Diverse visualization tools -- } help exploring the results\\[1em]
+        \item \textbf{More benchmarks --} this drives the development of the tools (contributions welcome!)\\[1em]
+    \end{itemize}
+
+
+    \strongpoint{\Benchopt{} is by no means finished or complete!}
+
+    \vskip2em
+    It is useful to a growing group of people but we need to gather more feedbacks to fit the needs of the community.\\[2em]
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}
