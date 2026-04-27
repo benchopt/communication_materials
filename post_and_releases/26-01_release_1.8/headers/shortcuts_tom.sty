@@ -1,0 +1,286 @@
+
+\ProvidesPackage{shortcuts_tom}[2018/05/01 Shortcut tommoral]
+
+% package to write conditionale statement in this library
+\usepackage{ifthen}
+
+% Packages used in this .sty
+\usepackage{rethm}
+\usepackage{aliascnt}
+\usepackage{etoolbox}
+\usepackage{bibentry}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%			Process options
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \newcounter{nstyles}	% Counter to throw a warning if multiple style are used
+
+\def\BEAMER{false}
+\DeclareOption{nobeamer}{
+	\def\BEAMER{false}
+}
+\DeclareOption{beamer}{
+	\def\BEAMER{true}
+}
+\ExecuteOptions{nobeamer}
+
+\ProcessOptions\relax
+
+% \ifthenelse{\value{nstyles} > 2}{
+% 	\PackageWarningNoLine {shortcut options}{
+% 		Multiple value for shortcut style.
+% 		Style "\STYLE" will be used.}
+% }
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%			Import classic packages
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Classic import
+
+\usepackage[utf8]{inputenc} % allow utf-8 input
+\usepackage[T1]{fontenc}    % use 8-bit T1 fonts
+\usepackage{url}            % simple URL typesetting
+\usepackage{booktabs}       % professional-quality tables
+\usepackage{amsfonts}       % blackboard math symbols
+\usepackage{nicefrac}       % compact symbols for 1/2, etc.
+\usepackage{microtype}      % microtypography
+\usepackage{stmaryrd}       % llbrackets
+\usepackage{amsmath}        % Mathematic macro
+\usepackage{amssymb}
+\usepackage{xr}             % Cross referencing
+% \usepackage{epstopdf}
+% \usepackage{pdfpages}
+% \usepackage{array}
+% \usepackage{color}
+% \usepackage{url}
+% \usepackage{mathtools}     % for arrows with text above/below
+
+% Subfile package to split the article in several files
+\usepackage{subfiles}
+
+% used for algorithms
+%\usepackage{algorithm}
+%\usepackage{algorithmic}
+\usepackage[titlenumbered,ruled,noend,linesnumbered]{algorithm2e}
+%\renewcommand{\algorithmiccomment}{\hfill $\blacktriangleright$}
+
+% Tikz imports
+\usepackage{tikz}           % graphic processing library
+\usetikzlibrary{arrows, positioning, calc}
+\usetikzlibrary{decorations.pathreplacing, patterns}
+
+
+% Figures packages
+\usepackage{graphicx}
+\DeclareGraphicsRule{.tif}{png}{.png}{`convert #1 `dirname #1`/`basename #1 .tif`.png}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%		Use and fix hyperref+natbib in non-beamer calls
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\makeatletter
+
+\ifthenelse{\equal{\BEAMER}{false}}{
+
+	%FIX natbib citation style when not in beamers
+
+	% Load hyperref and setup color links
+	\usepackage{hyperref}       % hyperlinks
+	\definecolor{linkcolor}{RGB}{83,83,182}
+	\definecolor{darkred}{RGB}{126,42,92}
+	\hypersetup{
+		colorlinks=true,
+		citecolor=linkcolor,
+		linkcolor=linkcolor}
+
+	\pretocmd{\NAT@citex}{%
+	  \let\NAT@hyper@\NAT@hyper@citex
+	  \def\NAT@postnote{#2}%
+	  \setcounter{NAT@total@cites}{0}%
+	  \setcounter{NAT@count@cites}{0}%
+	  \forcsvlist{\stepcounter{NAT@total@cites}\@gobble}{#3}}{}{}
+	\newcounter{NAT@total@cites}
+	\newcounter{NAT@count@cites}
+	\def\NAT@postnote{}
+
+	% include postnote and \citet closing bracket in hyperlink
+	\def\NAT@hyper@citex#1{%
+	  \stepcounter{NAT@count@cites}%
+	  \hyper@natlinkstart{\@citeb\@extra@b@citeb}#1%
+	  \ifnumequal{\value{NAT@count@cites}}{\value{NAT@total@cites}}
+		{\ifNAT@swa\else\if*\NAT@postnote*\else%
+		 \NAT@cmt\NAT@postnote\global\def\NAT@postnote{}\fi\fi}{}%
+	  \ifNAT@swa\else\if\relax\NAT@date\relax
+	  \else\NAT@@close\global\let\NAT@nm\@empty\fi\fi% avoid compact citations
+	  \hyper@natlinkend}
+	\renewcommand\hyper@natlinkbreak[2]{#1}
+
+	% avoid extraneous postnotes, closing brackets
+	\patchcmd{\NAT@citex}
+	  {\ifNAT@swa\else\if*#2*\else\NAT@cmt#2\fi
+	   \if\relax\NAT@date\relax\else\NAT@@close\fi\fi}{}{}{}
+	\patchcmd{\NAT@citex}
+	  {\if\relax\NAT@date\relax\NAT@def@citea\else\NAT@def@citea@close\fi}
+	  {\if\relax\NAT@date\relax\NAT@def@citea\else\NAT@def@citea@space\fi}{}{}
+
+}{
+	% Add Logos directory in the graphic path for beamer templates
+	\def\graphicspath#1{\def\Ginput@path{#1{/home/tom/Pictures/Logos/}}}
+}
+
+\makeatother
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%			Custom commands
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Todo commands
+\usepackage[textwidth=2.4cm, textsize=scriptsize]{todonotes}
+\newcommand{\tmtodo}[1]{\todo[color=orange!40]{{\bf TM:} #1}}
+
+
+% Custom commands
+\newcommand {\Z} {{\mathbb{Z}}}
+\newcommand {\I} {{\textbf{I}}}
+\newcommand {\bO} [2][] {\underset{#1}{\mathcal O}\left(#2\right)}
+\providecommand {\E}[2][] {{\mathbb{E}_{#1}\left[#2\right]}}
+\newcommand {\x} {\textbf{x}}
+\newcommand{\smeq}{\medmuskip=0mu \thickmuskip=0mu \thinmuskip=0mu}
+\newcommand{\tran}{^\mathsf{T}}
+\newcommand{\parallelsum}{\mathbin{\!/\mkern-5mu/\!}}
+\newcommand{\Tr}[1]{\textbf{Tr}\left[#1\right]}
+\newcommand{\mref}[2]{\mbox{\hyperref[#1]{#2~\ref*{#1}}}}
+\newcommand{\Dset}{\mathcal{D}}
+\newcommand{\Hset}{\mathcal{H}}
+\newcommand{\Rset}{{\mathbb{R}}}
+\newcommand{\Nset}{{\mathbb{N}}}
+\newcommand{\Zset}{{\mathbb{Z}}}
+\newcommand{\Xset}{{\mathcal X}}
+\newcommand{\Fset}{{\mathcal F}}
+\newcommand{\Yset}{{\mathcal Y}}
+\newcommand{\zo}{{z'}}
+\newcommand{\ltil}{\tilde{\ell}}
+\newcommand{\pW}{{\pmb{\mathcal W}}}
+\newcommand{\interval}[1]{\llbracket #1 \rrbracket}
+
+\newcommand{\st}{\textit{s.t.}}
+\newcommand{\ie}{\textit{i.e.}}
+\newcommand{\eg}{\textit{e.g.}}
+
+\newcommand{\strongpoint}[1]{\vskip1em{\centering\large
+		$\Rightarrow$ #1\\}}
+
+
+% highlight code
+\newcommand\code[1]{\fcolorbox{white}{gray!15}{\color[rgb]{0,.3,.6}\texttt{#1}}}
+
+
+\newcommand {\sN} {{\sim \mathcal N(0, \I)}}
+\newcommand {\sZ} {{\sim \mathcal Z}}
+\DeclareMathOperator*{\prox}{\text{prox}}
+\DeclareMathOperator*{\argmin}{\arg\!\min}
+\DeclareMathOperator*{\argmax}{\arg\!\max}
+
+
+% Hook for nested subfiles. Use a subfile b.tex in a subfile a.tex by setting
+% relative SubfileLocation in a.tex
+\def\SubfileLocation{.}
+\let\subfiles\subfile
+\renewcommand{\subfile}[1]{\subfiles{\SubfileLocation/#1}}
+
+% Tikz insert from subfile in subfile
+\def\TikzLocation{./}
+\newcommand{\inputTikZ}[2]{\scalebox{#1}{\subfile{\TikzLocation#2}}}
+
+% Biblio in subfiles
+\def\Bibstyle{plainnat}
+\def\biblio{\bibliographystyle{\Bibstyle}\bibliography{\Bibfile}}
+\let\cbiblio\biblio
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%			Theorem env and numbering
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Declare common theorem environments
+\ifthenelse{\isundefined{\theorem}}{
+	\usepackage{amsthm}
+	\newtheorem{theorem}{Theorem}
+}
+
+
+\newcommand{\maketheorem}[3][theorem]{
+	\expandafter\let\csname #2\endcsname\undefined
+	\newaliascnt{#2}{#1}
+	\newtheorem{#2}[#2]{#3}
+	\aliascntresetthe{#2}
+	\expandafter\def\csname#2name\endcsname~##1\null{#3~##1\null}
+}
+
+% Fix autoref naming for Proposition and Lemma
+\maketheorem{lemma}{Lemma}
+\maketheorem{corollary}{Corollary}
+\maketheorem{proposition}{Proposition}
+\maketheorem{definition}{Definition}
+\maketheorem{remark}{Remark}
+\newtheorem{hypothesis}{H\hskip.0em}
+
+% Annex theorem envs
+\newtheorem{theoremA}{Theorem}[section]
+\maketheorem[theoremA]{lemmA}{Lemme}
+\maketheorem[theoremA]{propositionA}{Proposition}
+
+% Set autoref names for sections and equation environments
+\def\equationautorefname~#1\null{(#1)\null}
+\def\hypothesisautorefname~#1\null{(\textbf{H#1})\null}
+\def\algorithmautorefname{Algorithm}
+\def\chapterautorefname{Chapter}
+\def\sectionautorefname{Section}
+\def\subsectionautorefname{Subsection}
+\def\subsubsectionautorefname{Subsubsection}
+
+
+% Avoid appendix resets
+\let\makeappendix\appendix
+\renewcommand{\appendix}{
+	\makeappendix
+	\def\makeappendix{}
+}
+
+
+\usepackage{thmtools,thm-restate}
+\newcommand{\restatethm}[2]{
+	\ifthenelse{\isundefined{#1}}{
+		\textbf{Recall \autoref{#2}}
+	}{
+		#1*
+	}
+}
+\newcommand{\numberedthm}[2]{
+	\ifthenelse{\isundefined{#1}}{
+		\textbf{Recall \autoref{#2}}
+	}{
+		#1
+	}
+}
+
+
+
+% Link with logo
+\newcommand{\logol}[1]{\includegraphics[height=1em]{#1}}
+\newcommand{\link}[3][]{%
+\ifthenelse{\equal{#1}{}}{
+		\raisebox{-.25em}{\logol{#3}} #2\hskip1em
+	}{
+		\raisebox{-.2em}{\logol{#3}} \href{#1}{#2}\hskip1em
+	}%
+}
+
+
+% End of the package
+\endinput

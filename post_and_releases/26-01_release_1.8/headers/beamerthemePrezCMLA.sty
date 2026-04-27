@@ -1,0 +1,223 @@
+% Copyright 2015 by Thomas Moreau
+%
+% This file may be distributed and/or modified
+%
+% 1. under the LaTeX Project Public License and/or
+% 2. under the GNU Public License.
+%
+% See the file doc/licenses/LICENSE for more details.
+
+\ProvidesPackage{beamerthemePrezCMLA}
+\mode<presentation>
+
+\newif\ifbeamer@secheader
+\beamer@secheaderfalse
+
+\DeclareOptionBeamer{secheader}{\beamer@secheadertrue}
+\ProcessOptionsBeamer
+
+\usecolortheme{PrezCMLA}
+\useinnertheme[shadow]{rounded}
+\useoutertheme{infolines}
+
+\ifbeamer@secheader\else\setbeamertemplate{headline}[default]\fi
+
+%-----------------------------------------------------------------------------
+%  Variables declaration
+%-----------------------------------------------------------------------------
+
+% Define a location field
+\def\location{\beamer@location}
+\long\def\beamer@location#1{%
+  \def\insertlocation{#1}%
+  }
+\location{}
+
+%Define an event field
+\def\event{\beamer@event}
+\long\def\beamer@event#1{%
+  \def\insertevent{#1}%
+  }
+\event{}
+
+%Define a Collaborator field
+
+\usepackage{xstring}
+\def\collaborators{\@dblarg\beamer@collaborators}
+\long\def\beamer@collaborators[#1]#2{%
+  \def\insertcollaborators{#2}%
+  \def\jointwork{
+    \ifx&#2&%
+      \vskip1em
+    \else
+      {\small\IfEqCase{#1}{%
+          {supervised}{Work supervised by #2}%
+          {collab}{Work in collaboration with #2}%
+          {}{#2}%
+          }[Joint work with #2]
+      }
+    \fi
+  }
+  }
+\collaborators{}
+\def\LOGOS{\includeLogos[1em]{logo_parietal,logo_inria}\\[.5em]}
+\newlength\SizeLogoPage
+\newlength\SizeLogoHead
+\newlength\SizeTitleBox
+\newlength\LogoSep
+\setlength\SizeLogoPage{3em}
+\setlength\LogoSep{3em}
+\setlength\SizeLogoHead{1.8em}
+\setlength\SizeTitleBox{.8\textwidth}
+
+% Add options to help handeling logos
+\newcommand{\includeLogos}[2][2em]{%
+  %\hskip#1
+  \renewcommand*{\do}[1]{\hskip#1\includeLogo{##1}\hskip#1}% How to process each item
+  \docsvlist{#2}% Process list
+}
+\newcommand\extraLogo{}
+\newcommand\includeLogo[1]{
+    \raisebox{-.5\height}{\includegraphics[height=\SizeLogoPage,
+                                           width=3\SizeLogoPage,
+                                           keepaspectratio]{#1}}
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Define header title for short presentations
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\defbeamertemplate{title page}{header}{
+  \leavevmode
+  \vskip-7.5ex
+  \begin{beamercolorbox}[wd=\paperwidth]{headline}
+  \centering
+    \begin{columns}[T]
+      \column{.15\paperwidth}
+      \column{.73\paperwidth}
+        \begin{center}
+          \usebeamercolor{title}{\color{fg}\large\textbf{{\inserttitle}}\\[1ex]}
+          \usebeamercolor{author}{\color{fg}\scriptsize{\insertauthor}}
+          \usebeamercolor{institute}{  \color{fg}\scriptsize{\insertinstitute}}
+        \end{center}
+      \column{.12\paperwidth}
+    \end{columns}
+    \vskip.5em
+  \end{beamercolorbox}
+\vskip-1em
+  % Separation line
+  \begin{beamercolorbox}[wd=\paperwidth]{separation line}\rule{0pt}{2pt}\end{beamercolorbox}\vfill
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  Define title slide for long presentation
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\defbeamertemplate{title page}{frame}{
+  \vskip.1\textheight
+  \begin{beamercolorbox}[sep=2pt,center, wd=\textwidth]{separationline}
+    %Title box
+    \begin{beamercolorbox}[center, wd=\SizeTitleBox]{headline}
+      \begin{center}
+          \centering
+          \usebeamercolor{title}{\color{fg}\Large\textbf{{\inserttitle}}\hskip2em\\[1.5ex]}
+          \usebeamercolor{author}{\color{fg}\small{\insertauthor}}
+          \usebeamercolor{institute}{  \color{fg}\small{\insertinstitute}\\}
+      \end{center}
+     \end{beamercolorbox}
+    \vskip-1em
+    \hskip0em
+    % Separation line
+    \begin{beamercolorbox}[center, wd=\SizeTitleBox]{separation line}\rule{0pt}{2pt}\end{beamercolorbox}\vfill
+  \end{beamercolorbox}
+  % LOGO and join work part of the title frame
+  \begin{center}
+      \vskip1em
+      \jointwork
+      \vskip\LogoSep
+      \LOGOS{}
+      \extraLogo{}
+  \end{center}
+}
+
+\setbeamertemplate{frametitle}{
+  \begin{beamercolorbox}[left, leftskip=1ex,colsep*=.5em,wd=\paperwidth]{block title}
+	\usebeamerfont*{frametitle}{\insertframetitle}
+  \end{beamercolorbox}
+  \vskip-1em
+  \begin{beamercolorbox}[wd=\paperwidth]{separation line}
+    \rule{0pt}{1pt}
+  \end{beamercolorbox}
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%   Define the footer for the slides
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\setbeamertemplate{footline}{
+  \vskip2ex
+  \begin{beamercolorbox}[wd=\paperwidth]{separation line}
+    \rule{0pt}{1pt}
+  \end{beamercolorbox}
+  \leavevmode%
+  \begin{beamercolorbox}[ht=1.2em,leftskip=1em,rightskip=1em]{footline}%
+    \insertevent
+    \ifnum \insertframenumber>0 \hfill \insertframenumber/\inserttotalframenumber \fi
+    \hfill \insertlocation
+    \vspace{.1em}
+  \end{beamercolorbox}
+}
+
+
+\setbeamertemplate{itemize items}[triangle]
+\setbeamertemplate{itemize item}{\raisebox{0.12ex}{$\blacktriangleright$}\hskip0.1em}
+\setbeamertemplate{enumerate item}{\bf\insertenumlabel.}
+
+% Remove toc numbered ball
+\setbeamertemplate{section in toc}{\Large\inserttocsection}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%   Define section header slides
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand\makerefentry[1]{\item\bibentry{#1}}
+
+\newcommand{\parttitleframe}[2][]{
+    \begin{frame}[t]
+    \vskip4em
+    \centering
+    \begin{beamercolorbox}[sep=8pt,center,shadow=true,rounded=true]{title}
+        \usebeamerfont{title}\insertsectionhead%
+    \end{beamercolorbox}
+    \vfill
+    #1
+    \vfill
+    % Reference bloc
+    \ifthenelse{\equal{#2}{}}{}{
+        \flushleft\textbf{References}
+        \small\vskip.5em
+        \begin{itemize}
+           \forcsvlist{\makerefentry}{#2}
+        \end{itemize}
+    }
+\end{frame}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%    Define custom commands
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\newcommand\keypoint[1]{\hspace{0pt plus 1 filll}\textcolor{gray}{#1}\hskip10ex}
+\newcommand\mycite[1]{\keypoint{\small\citep{#1}}}
+
+\mode
+<all>
+
+% Add ~/Pictures/Logos to the graphics path search
+\makeatletter
+\def\graphicspath#1{\def\Ginput@path{#1{/home/tom/Pictures/Logos/}}}
+\makeatother

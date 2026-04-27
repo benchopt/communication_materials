@@ -1,0 +1,98 @@
+\ProvidesPackage{beamer_tom}[2018/07/04 Beamer tommoral]
+
+
+\def\POSTER{false}
+\DeclareOption{presentation}{
+}
+\DeclareOption{poster}{
+	\def\POSTER{true}
+}
+\ExecuteOptions{presentation}
+\ProcessOptions\relax
+
+
+\usepackage{ifthen}
+\usepackage[beamer]{shortcuts_tom}
+\bibliographystyle{apalike}
+
+\ifthenelse{\equal{\POSTER}{false}}{
+	\mode<presentation> {
+		\usetheme{PrezCMLA}
+		\usecolortheme{PrezCMLA}
+		\setbeamertemplate{navigation symbols}{} % Remove the navigation symbols
+	}
+
+	\makeatletter
+	\def\beamer@newblock{%
+		\usebeamercolor[fg]{bibliography entry author}%
+		\usebeamerfont{bibliography entry author}%
+		\usebeamertemplate{bibliography entry author}%
+		\def\newblock{%
+			\usebeamercolor[fg]{bibliography entry title}%
+			\usebeamerfont{bibliography entry title}%
+			\usebeamertemplate{bibliography entry title}%
+			\def\newblock{%
+				\usebeamercolor[fg]{bibliography entry location}%
+				\usebeamerfont{bibliography entry location}%
+				\usebeamertemplate{bibliography entry location}%
+				\def\newblock{%
+					\usebeamercolor[fg]{bibliography entry note}%
+					\usebeamerfont{bibliography entry note}%
+					\usebeamertemplate{bibliography entry note}}}}%
+		\leavevmode\setbox\beamer@tempbox=\hbox{}\ht\beamer@tempbox=0em\box\beamer@tempbox}
+	\setbeamertemplate{bibliography entry title}{}{}
+	\setbeamertemplate{bibliography entry location}{}{}
+
+	\makeatother
+}{
+	\mode<presentation> {
+     		\usetheme{PosterCMLA}
+	}
+	\usepackage[a0paper,scale=1.4, orientation=portrait]{beamerposter}
+	\pdfobjcompresslevel=0
+	\usepackage{type1cm}
+
+
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\newlength\bodywd
+\newlength\skipg
+\setlength\skipg{\widthof{\bf g}}
+\pgfkeys{
+    /highlight/.cd,
+    c/.initial={darkred},
+    wd/.initial={0}
+}
+
+% usage \highlight[c=color, wd=width]{text to highlight}
+\newcommand{\highlight}[2][]{%
+    \pgfkeys{/highlight/.cd,#1}%
+    \ifthenelse{\pgfkeysvalueof{/highlight/wd}=0}{
+        \setlength\bodywd{\widthof{\bf #2}}
+    }{
+        \setlength\bodywd{\pgfkeysvalueof{/highlight/wd}}
+    }
+    \raisebox{-.5em}{
+        \begin{beamercolorbox}[rounded=true, shadow=true, wd=\bodywd]{title}
+            \centering\bf\phantom{g}\hskip-\skipg \textcolor{\pgfkeysvalueof{/highlight/c}}{#2}
+    \end{beamercolorbox}}
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{appendixnumberbeamer}
+\usepackage[square, authoryear]{natbib}
+
+\definecolor{linkcolor}{RGB}{83, 83, 182}
+\def\keypoint#1{\hspace{0pt plus 1 filll}\textcolor{gray}{#1~~}}
+\def\mycite#1{\keypoint{[{\color{linkcolor} \small\citealt{#1}}]}}
+
+\def\myitem{\hskip1ex{\color{linkcolor} $\blacktriangleright$}\hskip.3em}
+
+\newcommand{\rightcite}[1]{\keypoint{\small[{\color{linkcolor} #1}]}}
+\newcommand{\bottomlink}[1]{\vspace{0pt plus 1 filll}\rightcite{#1}}
